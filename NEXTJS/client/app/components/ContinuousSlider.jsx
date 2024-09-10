@@ -1,9 +1,16 @@
 import * as React from 'react';
-import Box from '@mui/material/Box';
-import Stack from '@mui/material/Stack';
 import Slider from '@mui/material/Slider';
-import VolumeDown from '@mui/icons-material/VolumeDown';
-import VolumeUp from '@mui/icons-material/VolumeUp';
+
+import { createTheme } from '@mui/material/styles';
+
+const theme = createTheme({
+  palette: {
+    ochre: {
+      primary:"red"
+    },
+  },
+});
+
 
 export default function ContinuousSlider() {
   const [value, setValue] = React.useState(30);
@@ -13,10 +20,6 @@ export default function ContinuousSlider() {
   };
 
   return (
-    <Box sx={{ width: 200 }}>
-      <Stack spacing={2} direction="row" sx={{ alignItems: 'center', mb: 1 }}>
-        <Slider aria-label="Volume" value={value} onChange={handleChange} />
-      </Stack>
-    </Box>
+        <Slider aria-label="Volume" value={value} onChange={handleChange} sx={{ width: 300, color: '#06b6d4' }} />
   );
 }

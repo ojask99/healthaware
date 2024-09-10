@@ -23,6 +23,7 @@ export default function UploadFileButton() {
       variant="contained"
       tabIndex={-1}
       startIcon={<CloudUploadIcon />}
+      className="bg-cyan-500"
     >
       Upload Image
       <VisuallyHiddenInput
