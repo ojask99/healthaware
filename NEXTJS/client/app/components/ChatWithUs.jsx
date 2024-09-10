@@ -31,8 +31,8 @@ export default function ChatWidget() {
             {/* Modal and backdrop */}
             {isOpen && (
                 <div className="fixed inset-0 flex items-center justify-center z-40">
-                    <div className="absolute inset-0 bg-black opacity-50 backdrop-blur-sm" onClick={toggleChat}></div>
-                    <div className="relative bg-white rounded-lg shadow-lg w-[90%] h-[80%] max-w-[600px] max-h-[600px]">
+                    <div className="absolute inset-0 bg-black opacity-50 backdrop-blur-md" onClick={toggleChat}></div>
+                    <div className="relative bg-white rounded-lg shadow-lg w-[90%] h-[80%] max-w-[800px]">
                         <ChatPlayground />
                     </div>
                 </div>

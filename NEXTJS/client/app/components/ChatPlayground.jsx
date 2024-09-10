@@ -63,15 +63,18 @@ export default function ChatPlayground() {
 
     return (
         <div className="flex flex-col h-full bg-white rounded-lg shadow-lg overflow-hidden border border-gray-200">
-            <div className="flex items-center p-4 bg-blue-700 text-white text-xl font-semibold">
-                <div
-                    className="cursor-pointer mr-3 p-2 rounded-full bg-white text-blue-700 w-6 h-6 flex items-center justify-center hover:bg-blue-100 transition-colors"
-                    onClick={() => window.location.reload()}
-                >
-                    X
-                </div>
-                <p className="m-0">Chat with AI</p>
-            </div>
+            <div className="flex items-center p-4 bg-gradient-to-r from-blue-600 to-blue-800 text-white text-xl font-semibold shadow-md rounded-t-lg">
+    <div
+        className="cursor-pointer mr-3 p-2 rounded-full bg-white text-blue-700 w-8 h-8 flex items-center justify-center hover:bg-blue-200 transition-all duration-200 transform hover:scale-110"
+        onClick={() => window.location.reload()}
+    >
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-4 h-4">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+    </div>
+    <p className="m-0 flex-grow text-center">Chat with AI</p>
+</div>
+
             <div className="flex-1 p-4 overflow-y-auto">
                 {messages.map((msg, index) => (
                     <div key={index} className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'} mb-3`}>
