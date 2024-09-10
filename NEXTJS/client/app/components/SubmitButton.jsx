@@ -1,9 +1,15 @@
 import * as React from 'react';
 import Button from '@mui/material/Button';
-import Stack from '@mui/material/Stack';
 
-export default function SubmitButton() {
+export default function SubmitButton({ onClick, disabled }) {
   return (
-      <Button variant="contained" className="bg-cyan-500">Submit</Button>
+    <Button 
+      variant="contained" 
+      className="bg-cyan-500" 
+      onClick={onClick}
+      disabled={disabled}
+    >
+      Submit
+    </Button>
   );
 }
