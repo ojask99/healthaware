@@ -3,39 +3,105 @@ import * as React from 'react';
 import ContinuousSlider from '../components/ContinuousSlider';
 import UploadFileButton from '../components/UploadFileButton';
 import SubmitButton from '../components/SubmitButton';
-import Button from '@mui/material/Button';
-import { Upload } from '@mui/icons-material';
+import Image from 'next/image';
 
 export default function TuberculosisDetectionForm() {
+  const [confidence, setConfidence] = React.useState(0.3);
+  const [file, setFile] = React.useState(null);
+  const [fileName, setFileName] = React.useState('');
+  const [processedImage, setProcessedImage] = React.useState(null);
+  const [isLoading, setIsLoading] = React.useState(false);
+
+  const handleConfidenceChange = (event, newValue) => {
+    setConfidence(newValue);
+  };
+
+  const handleFileChange = (event) => {
+    const selectedFile = event.target.files[0];
+    setFile(selectedFile);
+    setFileName(selectedFile ? selectedFile.name : '');
+  };
+
+  const handleSubmit = async () => {
+    if (!file) {
+      alert('Please select a file first');
+      return;
+    }
+
+    setIsLoading(true);
+
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('confidence', confidence / 100);  // Convert to 0-1 range
+
+    try {
+      const response = await fetch('http://localhost:5000/process_image', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      setProcessedImage(`data:image/jpeg;base64,${data.processed_image}`);
+    } catch (error) {
+      console.error('Error:', error);
+      alert('An error occurred while processing the image');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
-    <div className="flex flex-col items-center justify-start h-full text-white bg-sky-950">
-      <div className="mt-10"> {/* Added margin-top */}
-        <h1 className="font-bold text-3xl mb-2 text-center">Tuberculosis Detection Form</h1> {/* Increased font size */}
-        <h2 className="font-bold text-xl mb-8 text-center">Powered by YOLOv8</h2> {/* Reduced bottom margin */}
-      </div>
+    <div className="min-h-screen bg-sky-950 text-white p-8">
+      <div className="max-w-7xl mx-auto">
+        <h1 className="text-4xl font-bold text-center mb-2">Tuberculosis Detection Form</h1>
+        <h2 className="text-2xl font-semibold text-center mb-8">Powered by YOLOv8</h2>
 
-      <div className="p-10 border-orange-200 mb-5 rounded-lg text-white w-full max-w-2xl" style={{
-          WebkitBoxShadow: '1px 26px 73px 9px rgba(0,0,0,0.75)',
-          MozBoxShadow: '1px 26px 73px 9px rgba(0,0,0,0.75)',
-          boxShadow: '1px 26px 73px 9px rgba(0,0,0,0.75)',
-        }}>
-        <div className="form">
-          <div className="flex justify-start mb-7">
-            <h3 className="mr-2">Upload Image:</h3>
-            <UploadFileButton />
+        <div className="flex flex-col md:flex-row gap-8">
+          {/* Form Section */}
+          <div className="w-full md:w-1/2 bg-sky-900 rounded-lg p-6 shadow-lg">
+            <h3 className="text-xl font-semibold mb-4">Upload and Process</h3>
+            <div className="space-y-6">
+              {/* <div>
+                <h4 className="mb-2">Upload Image:</h4>
+                <UploadFileButton onChange={handleFileChange} />
+              </div> */}
+              <div>
+                <h4 className="mb-2">Upload Image:</h4>
+                <UploadFileButton onChange={handleFileChange} />
+                {fileName && <p className="mt-2">Selected file: {fileName}</p>}
+              </div>
+              <div>
+                <h4 className="mb-2">Confidence:</h4>
+                <ContinuousSlider value={confidence} 
+                  onChange={handleConfidenceChange} 
+                  min={0.00} 
+                  max={1.00} 
+                  step={0.01}/>
+                <h4>{confidence}%</h4>
+              </div>
+              <div>
+                <SubmitButton onClick={handleSubmit} disabled={isLoading} />
+              </div>
+            </div>
           </div>
-          <div className="flex justify-start mb-7">
-            <h3 className="mr-2">Confidence:</h3>
-            <ContinuousSlider />
-          </div>
-          <div className="mb-7">
-            <SubmitButton />
-          </div>
-        </div>
 
-        <div>
-          <h3 className="mb-2 text-white">Processed Image:</h3>
-          <img src="https://i1.sndcdn.com/artworks-7yTGT2Ldcj1k52QL-nOHcfw-t1080x1080.jpg" alt="Processed Image" className="border rounded-lg shadow-sm text-white" />
+          {/* Processed Image Section */}
+          <div className="w-full md:w-1/2 bg-sky-900 rounded-lg p-6 shadow-lg">
+            <h3 className="text-xl font-semibold mb-4">Processed Image</h3>
+            <div className="h-64 flex items-center justify-center border border-sky-700 rounded-lg">
+              {isLoading ? (
+                <p>Processing...</p>
+              ) : processedImage ? (
+                <Image src={processedImage} alt="Processed Image" width={500} height={500} className="max-w-full max-h-full object-contain" />
+              ) : (
+                <p>No image processed yet</p>
+              )}
+            </div>
+          </div>
         </div>
       </div>
     </div>

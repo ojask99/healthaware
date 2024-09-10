@@ -54,49 +54,52 @@ def chat_with_groq(query,processedtext=""):
 
 @app.route('/', methods=['POST'])
 def index():
+    if 'file' not in request.files:
+        return jsonify({'error': 'No file part in the request'}), 400
+    
+    file = request.files['file']
+    confidence = float(request.form.get('confidence', 0.5))
+
+    print(confidence)
+    
+    if file.filename == '':
+        return jsonify({'error': 'No file selected'}), 400
+    
     try:
-        file = request.files.get('file')
-        confidence = float(request.form.get('confidence', 0.5))
-
-        if file:
-            image = Image.open(file.stream)
-
-            image_np = np.array(image)
-
-            image_np = cv2.cvtColor(image_np, cv2.COLOR_RGB2BGR)
-
-            result = model(image_np)
-
-            for detection in result[0].boxes.data:
-                score = round(float(detection[4]), 2)
-                if score < confidence:
-                    continue 
-
-                x0, y0 = (int(detection[0]), int(detection[1]))
-                x1, y1 = (int(detection[2]), int(detection[3]))
-                cls = int(detection[5])
-
-                cv2.rectangle(image_np, (x0, y0), (x1, y1), (0, 255, 0), 2)
-                cv2.putText(image_np, f'{object_names[cls]} {score}', (x0, y0 - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
-
-            image_np = cv2.cvtColor(image_np, cv2.COLOR_BGR2RGB)
-
-            processed_image = Image.fromarray(image_np)
-
-            buffered = BytesIO()
-            processed_image.save(buffered, format="JPEG")
-            buffered.seek(0)
-
-            img_str = base64.b64encode(buffered.getvalue()).decode('utf-8')
-            img_data = f"data:image/jpeg;base64,{img_str}"
-
-            return jsonify({"processed_image": img_data, "object_names": object_names})
-
-        else:
-            return jsonify({"error": "No file provided"}), 400
-
+        # Read the image
+        image = Image.open(file.stream)
+        image_np = np.array(image)
+        image_np = cv2.cvtColor(image_np, cv2.COLOR_RGB2BGR)
+        
+        # Apply the model to the image
+        result = model(image_np)
+        
+        # Process detections
+        for detection in result[0].boxes.data:
+            score = round(float(detection[4]), 2)
+            if score < confidence:
+                continue
+            
+            x0, y0 = (int(detection[0]), int(detection[1]))
+            x1, y1 = (int(detection[2]), int(detection[3]))
+            cls = int(detection[5])
+            
+            cv2.rectangle(image_np, (x0, y0), (x1, y1), (0, 255, 0), 2)
+            cv2.putText(image_np, f'{object_names[cls]} {score}', (x0, y0 - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
+        
+        # Convert back to RGB for displaying
+        image_np = cv2.cvtColor(image_np, cv2.COLOR_BGR2RGB)
+        processed_image = Image.fromarray(image_np)
+        
+        # Convert to base64
+        buffered = BytesIO()
+        processed_image.save(buffered, format="JPEG")
+        img_str = base64.b64encode(buffered.getvalue()).decode('utf-8')
+        
+        return jsonify({'processed_image': img_str})
+    
     except Exception as e:
-        return jsonify({"error": str(e)}), 500
+        return jsonify({'error': str(e)}), 500
     
 @app.route("/chatbot", methods=["POST"])
 def chatbot():
