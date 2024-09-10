@@ -56,54 +56,53 @@ export default function TuberculosisDetectionForm() {
 
   return (
     <div className="min-h-screen bg-sky-950 text-white p-8">
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-4xl mx-auto">
         <h1 className="text-4xl font-bold text-center mb-2">Tuberculosis Detection Form</h1>
         <h2 className="text-2xl font-semibold text-center mb-8">Powered by YOLOv8</h2>
 
-        <div className="flex flex-col md:flex-row gap-8">
-          {/* Form Section */}
-          <div className="w-full md:w-1/2 bg-sky-900 rounded-lg p-6 shadow-lg">
-            <h3 className="text-xl font-semibold mb-4">Upload and Process</h3>
-            <div className="space-y-6">
-              {/* <div>
-                <h4 className="mb-2">Upload Image:</h4>
-                <UploadFileButton onChange={handleFileChange} />
-              </div> */}
-              <div>
-                <h4 className="mb-2">Upload Image:</h4>
-                <UploadFileButton onChange={handleFileChange} />
-                {fileName && <p className="mt-2">Selected file: {fileName}</p>}
-              </div>
-              <div>
-                <h4 className="mb-2">Confidence:</h4>
-                <ContinuousSlider value={confidence} 
-                  onChange={handleConfidenceChange} 
-                  min={0.00} 
-                  max={1.00} 
-                  step={0.01}/>
-                <h4>{confidence}%</h4>
-              </div>
-              <div>
-                <SubmitButton onClick={handleSubmit} disabled={isLoading} />
-              </div>
-            </div>
-          </div>
 
-          {/* Processed Image Section */}
-          <div className="w-full md:w-1/2 bg-sky-900 rounded-lg p-6 shadow-lg">
-            <h3 className="text-xl font-semibold mb-4">Processed Image</h3>
-            <div className="h-64 flex items-center justify-center border border-sky-700 rounded-lg">
-              {isLoading ? (
-                <p>Processing...</p>
-              ) : processedImage ? (
-                <Image src={processedImage} alt="Processed Image" width={500} height={500} className="max-w-full max-h-full object-contain" />
-              ) : (
-                <p>No image processed yet</p>
-              )}
+        <div className="w-full bg-sky-900 rounded-lg p-6 shadow-lg mb-8">
+          <h3 className="text-xl font-semibold mb-4">Upload and Process</h3>
+          <div className="space-y-6">
+            <div>
+              <h4 className="mb-2">Upload Image:</h4>
+              <UploadFileButton onChange={handleFileChange} />
+              {fileName && <p className="mt-2">Selected file: {fileName}</p>}
+            </div>
+            <div>
+              <h4 className="mb-2">Confidence:</h4>
+              <ContinuousSlider value={confidence} 
+                onChange={handleConfidenceChange} 
+                min={0.00} 
+                max={1.00} 
+                step={0.01}/>
+              <h4>{confidence}%</h4>
+            </div>
+            <div>
+              <SubmitButton onClick={handleSubmit} disabled={isLoading} />
             </div>
           </div>
         </div>
-      </div>
-    </div>
+
+        {/* Processed Image Section */}
+        
+            {isLoading ? (
+              <div className="w-full bg-sky-900 rounded-lg p-6 shadow-lg">
+              <h3 className="text-xl font-semibold mb-4">Processed Image</h3>
+              <div className="w-full flex items-center justify-center border border-sky-700 rounded-lg overflow-hidden">
+              <p>Processing...</p></div></div>
+            ) : processedImage ? (
+              <div className="w-full bg-sky-900 rounded-lg p-6 shadow-lg">
+              <h3 className="text-xl font-semibold mb-4">Processed Image</h3>
+              <div className="w-full flex items-center justify-center border border-sky-700 rounded-lg overflow-hidden">
+              <Image src={processedImage} alt="Processed Image" layout="responsive" width={1000} height={1000} className="max-w-full h-auto object-contain" />
+              </div></div>
+            ) : (
+              <></>
+            )}
+          </div>
+        </div>
+
+
   );
 }

@@ -55,7 +55,7 @@ def chat_with_groq(query,processedtext=""):
     return chat_completion.choices[0].message.content
 
 
-@app.route('/', methods=['POST'])
+@app.route('/process_image', methods=['POST'])
 def index():
     if 'file' not in request.files:
         return jsonify({'error': 'No file part in the request'}), 400
