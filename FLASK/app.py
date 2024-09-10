@@ -11,14 +11,17 @@ import os
 import gradio as gr
 from groq import Groq
 from flask_cors import CORS
-app = Flask(__name__)
+from dotenv import load_dotenv
 
+
+app = Flask(__name__)
+load_dotenv()
 CORS(app)
 
 model = YOLO('ml_model\\best.pt')
 object_names = list(model.names.values()) 
 
-os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = "local-bebop-435210-v6-95d15ea74806.json"
+os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = os.getenv('GOOGLE_APPLICATION_CREDENTIALS')
 
 def process_document(project_id: str, location: str, processor_id: str, file_path: str):
     client = documentai.DocumentProcessorServiceClient()
