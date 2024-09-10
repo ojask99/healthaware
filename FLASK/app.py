@@ -115,7 +115,7 @@ def chatbot():
                 document_text = chat_with_groq(query=query,processedtext=process_document(project_id, location, processor_id, file_path))
                 os.remove(file_path)
                 
-                return jsonify({"response": "PDF processed successfully.", "text": document_text})
+                return jsonify({"response": document_text})
             
             elif 'text' in request.form:
                 query = request.form['text']
