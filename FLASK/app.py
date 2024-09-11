@@ -15,7 +15,7 @@ import dill
 import tempfile
 import json
 from dotenv import load_dotenv
-
+from inference_sdk import InferenceHTTPClient
 
 app = Flask(__name__)
 load_dotenv()
@@ -205,6 +205,88 @@ def chatbot():
             return {"message": "This route is for POST requests only."}
     except Exception as e:
         return {"error": str(e)}
+
+@app.route('/process_image', methods=['POST'])
+def index2():
+    model = YOLO('ml_model\\best.pt')
+    object_names = list(model.names.values())
+
+    if 'file' not in request.files:
+        return jsonify({'error': 'No file part in the request'}), 400
+    
+    file = request.files['file']
+    confidence = float(request.form.get('confidence', 0.5))
+
+
+    
+    if file.filename == '':
+        return jsonify({'error': 'No file selected'}), 400
+    
+    try:
+        # Read the image
+        image = Image.open(file.stream)
+        image_np = np.array(image)
+        image_np = cv2.cvtColor(image_np, cv2.COLOR_RGB2BGR)
+        
+        # Apply the model to the image
+        result = model(image_np)
+        
+        # Process detections
+        for detection in result[0].boxes.data:
+            score = round(float(detection[4]), 2)
+            if score < confidence:
+                continue
+            
+            x0, y0 = (int(detection[0]), int(detection[1]))
+            x1, y1 = (int(detection[2]), int(detection[3]))
+            cls = int(detection[5])
+            
+            cv2.rectangle(image_np, (x0, y0), (x1, y1), (0, 255, 0), 2)
+            cv2.putText(image_np, f'{object_names[cls]} {score}', (x0, y0 - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
+        
+        # Convert back to RGB for displaying
+        image_np = cv2.cvtColor(image_np, cv2.COLOR_BGR2RGB)
+        processed_image = Image.fromarray(image_np)
+        
+        # Convert to base64
+        buffered = BytesIO()
+        processed_image.save(buffered, format="JPEG")
+        img_str = base64.b64encode(buffered.getvalue()).decode('utf-8')
+        
+        return jsonify({'processed_image': img_str})
+    
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+    
+@app.route('/brain_tumor', methods=['POST'])
+def brain_tumor():
+
+    try:
+        if 'file' not in request.files:
+            return jsonify({'error': 'No file part in the request'}), 400
+        
+        file = request.files['file']
+        if file.filename == '':
+            return jsonify({'error': 'No file selected'}), 400
+        
+        file_path = tempfile.mktemp(suffix='.jpg')
+        file.save(file_path)
+        
+        client = InferenceHTTPClient(api_url="https://detect.roboflow.com", api_key="YHypHFb5eybSSeruMCo4")
+        result = client.infer(file_path, model_id="brain-tumor-vgetf/1")
+        os.remove(file_path)
+        
+        predictions = result['predictions']
+        highest_confidence_prediction = max(predictions.items(), key=lambda x: x[1]['confidence'])
+        class_name, confidence_info = highest_confidence_prediction
+        
+        return jsonify({
+            "class_name": class_name,
+            "confidence": confidence_info['confidence']
+        })
+    
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 if __name__ == "__main__":
     app.run(debug=True)
