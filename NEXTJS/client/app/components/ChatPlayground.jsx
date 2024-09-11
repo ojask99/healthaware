@@ -1,7 +1,7 @@
 import { useState, useRef } from 'react';
 
 export default function ChatPlayground() {
-    const [messages, setMessages] = useState([]);
+    const [messages, setMessages] = useState([{text:"Hi! I'm happy to help with any medical questions or concerns you may have. Please feel free to ask me anything, and I'll do my best to provide you with accurate and reliable information based on the latest medical knowledge. Along with this if you need me to help you understand your medical report, kindly upload it and I will provide you with my inference.What's on your mind today?",sender:'ai'}]);
     const [input, setInput] = useState('');
     const [file, setFile] = useState(null);
     const [loadingMessage, setLoadingMessage] = useState(null);
