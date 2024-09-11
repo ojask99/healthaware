@@ -19,7 +19,7 @@ import Link from 'next/link';  // Import Next.js Link component
 const drawerWidth = 240;
 const navItems = [
   { label: 'Home', path: '/' },
-  { label: 'Casual', path: '/casual' },
+  { label: 'Casual User', path: '/casual' },
   { label: 'Enterprise', path: '/enterprise' },
 ];
 
@@ -56,7 +56,7 @@ function DrawerAppBar(props) {
   return (
     <Box sx={{ display: 'flex'} }>
       <CssBaseline />
-      <AppBar component="nav" sx={{ bgcolor: "#06b6d4" }}>
+      <AppBar component="nav" sx={{ bgcolor: "#008080" }}>
         <Toolbar>
           <IconButton
             color="inherit"
