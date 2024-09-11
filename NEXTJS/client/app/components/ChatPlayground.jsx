@@ -33,7 +33,7 @@ export default function ChatPlayground() {
             formData.append('text', input);
 
             try {
-                const response = await fetch('http://localhost:5000/chatbot', {
+                const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/chatbot`, {
                     method: 'POST',
                     body: formData,
                 });

@@ -35,7 +35,7 @@ export default function TuberculosisDetectionForm() {
     formData.append('confidence', confidence / 100);  // Convert to 0-1 range
 
     try {
-      const response = await fetch('http://localhost:5000/kidney', {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/kidney`, {
         method: 'POST',
         body: formData,
       });

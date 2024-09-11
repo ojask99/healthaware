@@ -1,6 +1,0 @@
-# Set default behavior for all text files to use LF (Unix-style)
-* text=auto
-
-# Force LF for JS and JSON files
-*.js text eol=lf
-*.json text eol=lf
