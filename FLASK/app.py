@@ -12,7 +12,8 @@ import gradio as gr
 from groq import Groq
 from flask_cors import CORS
 import dill
-
+import tempfile
+import json
 from dotenv import load_dotenv
 
 
@@ -21,8 +22,17 @@ load_dotenv()
 CORS(app)
 
 
+# Decode the Base64-encoded JSON and write it to a temporary file
+base64_credentials = os.getenv('GOOGLE_APPLICATION_CREDENTIALS_BASE64')
+credentials_json = base64.b64decode(base64_credentials).decode('utf-8')
 
-os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = os.getenv('GOOGLE_APPLICATION_CREDENTIALS')
+# Create a temporary file and write the decoded JSON to it
+with tempfile.NamedTemporaryFile(delete=False, suffix=".json") as temp_file:
+    temp_file.write(credentials_json.encode('utf-8'))
+    temp_credentials_path = temp_file.name
+
+# Set the path to the temporary credentials file in the environment
+os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = temp_credentials_path
 
 def process_document(project_id: str, location: str, processor_id: str, file_path: str):
     client = documentai.DocumentProcessorServiceClient()
