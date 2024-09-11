@@ -14,9 +14,14 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
+import Link from 'next/link';  // Import Next.js Link component
 
 const drawerWidth = 240;
-const navItems = ['Home', 'About', 'Contact'];
+const navItems = [
+  { label: 'Home', path: '/' },
+  { label: 'Casual', path: '/casual' },
+  { label: 'Enterprise', path: '/enterprise' },
+];
 
 function DrawerAppBar(props) {
   const { window } = props;
@@ -29,14 +34,16 @@ function DrawerAppBar(props) {
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
       <Typography variant="h6" sx={{ my: 2 }}>
-        MUI
+        MedAI Mavens
       </Typography>
       <Divider />
       <List>
         {navItems.map((item) => (
-          <ListItem key={item} disablePadding>
+          <ListItem key={item.label} disablePadding>
             <ListItemButton sx={{ textAlign: 'center' }}>
-              <ListItemText primary={item} />
+              <Link href={item.path} passHref>
+                <ListItemText primary={item.label} />
+              </Link>
             </ListItemButton>
           </ListItem>
         ))}
@@ -65,13 +72,15 @@ function DrawerAppBar(props) {
             component="div"
             sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
           >
-            MUI
+            MedAI Mavens
           </Typography>
           <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
             {navItems.map((item) => (
-              <Button key={item} sx={{ color: '#fff' }}>
-                {item}
-              </Button>
+              <Link href={item.path} key={item.label} passHref>
+                <Button sx={{ color: '#fff' }}>
+                  {item.label}
+                </Button>
+              </Link>
             ))}
           </Box>
         </Toolbar>
@@ -82,13 +91,9 @@ function DrawerAppBar(props) {
           variant="temporary"
           open={mobileOpen}
           onClose={handleDrawerToggle}
-        //   ModalProps={{
-        //     keepMounted: true, // Better open performance on mobile.
-        //   }}
           sx={{
             display: { xs: 'block', sm: 'none'},
             '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
-            bgcolor: "#06b6d4"
           }}
         >
           {drawer}
@@ -99,10 +104,6 @@ function DrawerAppBar(props) {
 }
 
 DrawerAppBar.propTypes = {
-  /**
-   * Injected by the documentation to work in an iframe.
-   * You won't need it on your project.
-   */
   window: PropTypes.func,
 };
 
