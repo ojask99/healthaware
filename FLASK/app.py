@@ -133,7 +133,7 @@ def index1():
         image_np = cv2.cvtColor(image_np, cv2.COLOR_RGB2BGR)
         
         # Apply the model to the image
-        result = model(image_np)
+        result = model(image_np) 
         
         # Process detections
         for detection in result[0].boxes.data:
