@@ -55,11 +55,10 @@ export default function TuberculosisDetectionForm() {
   };
 
   return (
-    <div className="min-h-screen bg-sky-950 text-white p-8">
-      <div className="max-w-4xl mx-auto">
-        <h1 className="text-4xl font-bold text-center mb-2">Tuberculosis Detection Form</h1>
-        <h2 className="text-2xl font-semibold text-center mb-8">Powered by YOLOv8</h2>
-
+    <div className="min-h-screen bg-sky-950 text-white">
+      <div className="flex flex-col justify-center items-center min-h-screen">
+        <div className="max-w-4xl mx-auto w-full mt-16 p-8">
+          <h1 className="text-4xl font-bold text-center mt-2 mb-10">Kidney Stone Detection</h1>
 
         <div className="w-full bg-sky-900 rounded-lg p-6 shadow-lg mb-8">
           <h3 className="text-xl font-semibold mb-4">Upload and Process</h3>
@@ -83,6 +82,7 @@ export default function TuberculosisDetectionForm() {
             </div>
           </div>
         </div>
+        </div>
 
         {/* Processed Image Section */}
         
@@ -102,7 +102,5 @@ export default function TuberculosisDetectionForm() {
             )}
           </div>
         </div>
-
-
   );
 }
