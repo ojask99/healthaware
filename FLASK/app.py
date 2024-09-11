@@ -315,5 +315,50 @@ def skin_cancer():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
+@app.route('/pneumonia_detection', methods=['POST'])
+def pneumonia_detection():
+    try:
+        if 'file' not in request.files:
+            return jsonify({'error': 'No file part in the request'}), 400
+        
+        file = request.files['file']
+        if file.filename == '':
+            return jsonify({'error': 'No file selected'}), 400
+        
+        # Create a temporary file path with .jpeg suffix
+        temp_file_path = tempfile.mktemp(suffix='.jpeg')
+        
+        # Check if the file is in JPG format and convert it to JPEG if necessary
+        if file.filename.lower().endswith('.jpg'):
+            img = Image.open(file)
+            img = img.convert('RGB')
+            img.save(temp_file_path, 'JPEG')
+        else:
+            file.save(temp_file_path)
+        
+        # Initialize the InferenceHTTPClient
+        client = InferenceHTTPClient(api_url="https://detect.roboflow.com", api_key="MqdegO9gukH95ZvKkZAQ")
+        
+        # Perform the inference
+        result = client.infer(temp_file_path, model_id="pneumonia-cls/1")
+        
+        # Remove the temporary file
+        os.remove(temp_file_path)
+        
+        # Process the predictions and find the highest confidence prediction
+        predictions = result['predictions']
+        highest_confidence_prediction = max(predictions.items(), key=lambda x: x[1]['confidence'])
+        class_name, confidence_info = highest_confidence_prediction
+        
+        # Return the result as JSON
+        return jsonify({
+            "class_name": class_name,
+            "confidence": confidence_info['confidence']
+        })
+    
+    except requests.exceptions.HTTPError as http_err:
+        return jsonify({'error': f"HTTP error occurred: {http_err}"}), 500
+    except Exception as err:
+        return jsonify({'error': f"Other error occurred: {err}"}), 500
 if __name__ == "__main__":
     app.run(debug=True)
