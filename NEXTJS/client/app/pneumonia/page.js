@@ -51,7 +51,7 @@ export default function PneumoniaDetectionForm() {
     <div className="min-h-screen bg-sky-950 text-white">
       <div className="flex flex-col justify-center items-center min-h-screen">
         <div className="max-w-4xl mx-auto w-full mt-16 p-8">
-          <h1 className="text-4xl font-bold text-center mt-2 mb-10">Pneumonia Detection Form</h1>
+          <h1 className="text-4xl font-bold text-center mt-2 mb-10">Pneumonia/Covid-19 Detection</h1>
           <div className="w-full bg-sky-900 rounded-lg p-6 shadow-lg mb-8">
             <h3 className="text-xl font-semibold mb-4">Upload and Process</h3>
             <div className="space-y-6">
