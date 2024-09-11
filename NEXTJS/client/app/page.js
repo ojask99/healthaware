@@ -4,7 +4,7 @@ import Link from 'next/link';
 
 export default function Home() {
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center p-4 sm:p-8 pt-24 text-white bg-[url('https://i.pinimg.com/564x/07/05/0c/07050c71b5cd7160ec9d07033b8f9b1f.jpg')] bg-no-repeat bg-cover bg-center">
+    <div className="min-h-screen flex flex-col items-center justify-center p-4 sm:p-8 pt-24 text-white bg-[#1E1E1E] bg-no-repeat bg-cover bg-center">
       <h1 className="text-4xl font-bold mb-10 mt-12">Welcome to Health Aware!</h1>
       <div className="w-full max-w-7xl grid grid-cols-1 lg:grid-cols-2 gap-8">
         
@@ -20,7 +20,7 @@ export default function Home() {
           <div className="flex-grow">
             <h2 className="text-2xl font-semibold mb-4">Casual User</h2>
             <p className="mb-6 text-sky-100">
-              Welcome to your personal medical assistant! Our chatbot helps you interpret your medical reports and answer your medical doubts with ease. Simply upload your reports, ask any medical questions, and receive quick, reliable answers. Designed for ease of use and backed by medical professionals, Health Aware provides accurate information and insights to help you understand your health better. Available 24/7, it's your go-to resource for maintaining health, managing conditions, and staying informed. Start now by clicking on the chatbot icon, uploading your reports, and typing your questions.
+              Welcome to your personal medical assistant! Our chatbot helps you interpret your medical reports and answer your medical doubts with ease. Simply upload your reports, ask any medical questions, and receive quick, reliable answers. Designed for ease of use and backed by medical professionals, Health Aware provides accurate information and insights to help you understand your health better. Available 24/7, it&apos;s your go-to resource for maintaining health, managing conditions, and staying informed. Start now by clicking on the chatbot icon, uploading your reports, and typing your questions.
             </p>
           </div>
           <Link href="/casual" className="self-start mt-auto">
