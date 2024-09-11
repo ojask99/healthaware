@@ -4,7 +4,7 @@ import Link from 'next/link';
 
 export default function Home() {
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center p-4 sm:p-8 pt-24 text-white bg-[#1E1E1E] bg-no-repeat bg-cover bg-center">
+    <div className="min-h-screen flex flex-col items-center justify-center p-4 sm:p-8 pt-24 text-white bg-[url('https://i.pinimg.com/564x/07/05/0c/07050c71b5cd7160ec9d07033b8f9b1f.jpg')] bg-no-repeat bg-cover bg-center">
       <h1 className="text-4xl font-bold mb-10 mt-12">Welcome to Health Aware!</h1>
       <div className="w-full max-w-7xl grid grid-cols-1 lg:grid-cols-2 gap-8">
         

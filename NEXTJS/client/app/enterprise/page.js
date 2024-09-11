@@ -8,7 +8,7 @@ export default function Enterprise() {
         <div className="min-h-screen flex flex-col justify-center items-center bg-[radial-gradient(circle,rgba(30,162,160,1)_0%,rgba(8,28,87,0.9641981792717087)_39%,rgba(9,9,9,1)_100%)] text-white p-4 pt-24">
             <div>
                 <h1 className="text-2xl md:text-4xl mb-8 text-center">
-                    Welcome to Enterprise!
+                    Welcome!
                 </h1>
             </div>
             <div className="flex flex-col md:flex-row justify-center items-center gap-10">
