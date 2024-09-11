@@ -288,5 +288,32 @@ def brain_tumor():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
+@app.route('/skin_cancer', methods=['POST'])
+def skin_cancer():
+    try:
+        if 'file' not in request.files:
+            return jsonify({'error': 'No file part in the request'}), 400
+        
+        file = request.files['file']
+        if file.filename == '':
+            return jsonify({'error': 'No file selected'}), 400
+        
+        file_path = tempfile.mktemp(suffix='.jpg')
+        file.save(file_path)
+        
+        client = InferenceHTTPClient(api_url="https://classify.roboflow.com", api_key="1yoJXD1rfYZYFTaqKyvh")
+        result = client.infer(file_path, model_id="molemonitor/4")
+        os.remove(file_path)
+        
+        highest_confidence_prediction = max(result['predictions'], key=lambda x: x['confidence'])
+        
+        return jsonify({
+            "class_name": highest_confidence_prediction['class'],
+            "confidence": highest_confidence_prediction['confidence']
+        })
+    
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
 if __name__ == "__main__":
     app.run(debug=True)
