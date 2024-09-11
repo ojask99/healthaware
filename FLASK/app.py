@@ -11,6 +11,8 @@ import os
 import gradio as gr
 from groq import Groq
 from flask_cors import CORS
+import dill
+
 from dotenv import load_dotenv
 
 
@@ -18,8 +20,7 @@ app = Flask(__name__)
 load_dotenv()
 CORS(app)
 
-model = YOLO('ml_model\\best.pt')
-object_names = list(model.names.values()) 
+
 
 os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = os.getenv('GOOGLE_APPLICATION_CREDENTIALS')
 
@@ -57,13 +58,16 @@ def chat_with_groq(query,processedtext=""):
 
 @app.route('/process_image', methods=['POST'])
 def index():
+    model = YOLO('ml_model\\best.pt')
+    object_names = list(model.names.values())
+
     if 'file' not in request.files:
         return jsonify({'error': 'No file part in the request'}), 400
     
     file = request.files['file']
     confidence = float(request.form.get('confidence', 0.5))
 
-    print(confidence)
+
     
     if file.filename == '':
         return jsonify({'error': 'No file selected'}), 400
@@ -89,6 +93,60 @@ def index():
             
             cv2.rectangle(image_np, (x0, y0), (x1, y1), (0, 255, 0), 2)
             cv2.putText(image_np, f'{object_names[cls]} {score}', (x0, y0 - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
+        
+        # Convert back to RGB for displaying
+        image_np = cv2.cvtColor(image_np, cv2.COLOR_BGR2RGB)
+        processed_image = Image.fromarray(image_np)
+        
+        # Convert to base64
+        buffered = BytesIO()
+        processed_image.save(buffered, format="JPEG")
+        img_str = base64.b64encode(buffered.getvalue()).decode('utf-8')
+        
+        return jsonify({'processed_image': img_str})
+    
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+    
+
+@app.route('/kidney', methods=['POST'])
+def index1():
+    model = YOLO('ml_model\\kidney_stone.pt')
+    object_names = list(model.names.values())
+    print(object_names)
+
+    if 'file' not in request.files:
+        return jsonify({'error': 'No file part in the request'}), 400
+    
+    file = request.files['file']
+    confidence = float(request.form.get('confidence', 0.5))
+
+
+    
+    if file.filename == '':
+        return jsonify({'error': 'No file selected'}), 400
+    
+    try:
+        # Read the image
+        image = Image.open(file.stream)
+        image_np = np.array(image)
+        image_np = cv2.cvtColor(image_np, cv2.COLOR_RGB2BGR)
+        
+        # Apply the model to the image
+        result = model(image_np)
+        
+        # Process detections
+        for detection in result[0].boxes.data:
+            score = round(float(detection[4]), 2)
+            if score < confidence:
+                continue
+            
+            x0, y0 = (int(detection[0]), int(detection[1]))
+            x1, y1 = (int(detection[2]), int(detection[3]))
+            cls = int(detection[5])
+            
+            cv2.rectangle(image_np, (x0, y0), (x1, y1), (0, 255, 0), 2)
+            # cv2.putText(image_np, f'{object_names[cls]} {score}', (x0, y0 - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
         
         # Convert back to RGB for displaying
         image_np = cv2.cvtColor(image_np, cv2.COLOR_BGR2RGB)
