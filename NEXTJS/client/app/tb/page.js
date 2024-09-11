@@ -35,7 +35,7 @@ export default function TuberculosisDetectionForm() {
     formData.append('confidence', confidence / 100);  // Convert to 0-1 range
 
     try {
-      const response = await fetch('http://localhost:5000/process_image', {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/process_image`, {
         method: 'POST',
         body: formData,
       });
@@ -55,51 +55,54 @@ export default function TuberculosisDetectionForm() {
   };
 
   return (
-    <div className="h-screen bg-sky-950 text-white mt-16 p-8">
-      <div className="max-w-4xl mx-auto">
-        <h1 className="text-4xl font-bold text-center mt-2 mb-10">Tuberculosis Detection Form</h1>
-        <div className="w-full bg-sky-900 rounded-lg p-6 shadow-lg mb-8">
-          <h3 className="text-xl font-semibold mb-4">Upload and Process</h3>
-          <div className="space-y-6">
-            <div>
-              <h4 className="mb-2">Upload Image:</h4>
-              <UploadFileButton onChange={handleFileChange} />
-              {fileName && <p className="mt-2">Selected file: {fileName}</p>}
-            </div>
-            <div>
-              <h4 className="mb-2">Confidence:</h4>
-              <ContinuousSlider value={confidence} 
-                onChange={handleConfidenceChange} 
-                min={0.00} 
-                max={1.00} 
-                step={0.01}/>
-              <h4>{confidence}%</h4>
-            </div>
-            <div>
-              <SubmitButton onClick={handleSubmit} disabled={isLoading} />
+    <div className="min-h-screen bg-sky-950 text-white">
+      <div className="flex flex-col justify-center items-center min-h-screen">
+        <div className="max-w-4xl mx-auto w-full mt-16 p-8">
+          <h1 className="text-4xl font-bold text-center mt-2 mb-10">Tuberculosis Detection Form</h1>
+          <div className="w-full bg-sky-900 rounded-lg p-6 shadow-lg mb-8">
+            <h3 className="text-xl font-semibold mb-4">Upload and Process</h3>
+            <div className="space-y-6">
+              <div>
+                <h4 className="mb-2">Upload Image:</h4>
+                <UploadFileButton onChange={handleFileChange} />
+                {fileName && <p className="mt-2">Selected file: {fileName}</p>}
+              </div>
+              <div>
+                <h4 className="mb-2">Confidence:</h4>
+                <ContinuousSlider value={confidence} 
+                  onChange={handleConfidenceChange} 
+                  min={0.00} 
+                  max={1.00} 
+                  step={0.01}/>
+                <h4>{confidence}%</h4>
+              </div>
+              <div>
+                <SubmitButton onClick={handleSubmit} disabled={isLoading} />
+              </div>
             </div>
           </div>
-        </div>
 
-        {/* Processed Image Section */}
-        
-            {isLoading ? (
-              <div className="w-full bg-sky-900 rounded-lg p-6 shadow-lg">
+          {/* Processed Image Section */}
+          
+          {isLoading ? (
+            <div className="w-full bg-sky-900 rounded-lg p-6 shadow-lg">
               <h3 className="text-xl font-semibold mb-4">Processed Image</h3>
               <div className="w-full flex items-center justify-center border border-sky-700 rounded-lg overflow-hidden">
-              <p>Processing...</p></div></div>
-            ) : processedImage ? (
-              <div className="w-full bg-sky-900 rounded-lg p-6 shadow-lg">
+                <p>Processing...</p>
+              </div>
+            </div>
+          ) : processedImage ? (
+            <div className="w-full bg-sky-900 rounded-lg p-6 shadow-lg">
               <h3 className="text-xl font-semibold mb-4">Processed Image</h3>
               <div className="w-full flex items-center justify-center border border-sky-700 rounded-lg overflow-hidden">
-              <Image src={processedImage} alt="Processed Image" layout="responsive" width={1000} height={1000} className="max-w-full h-auto object-contain" />
-              </div></div>
-            ) : (
-              <></>
-            )}
-          </div>
+                <Image src={processedImage} alt="Processed Image" layout="responsive" width={1000} height={1000} className="max-w-full h-auto object-contain" />
+              </div>
+            </div>
+          ) : (
+            <></>
+          )}
         </div>
-
-
+      </div>
+    </div>
   );
 }
