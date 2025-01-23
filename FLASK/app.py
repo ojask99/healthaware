@@ -23,20 +23,8 @@ load_dotenv()
 CORS(app)
 
 
-# # Decode the Base64-encoded JSON and write it to a temporary file
-# base64_credentials = os.getenv('GOOGLE_APPLICATION_CREDENTIALS_BASE64')
-# credentials_json = base64.b64decode(base64_credentials).decode('utf-8')
-
-# # Create a temporary file and write the decoded JSON to it
-# with tempfile.NamedTemporaryFile(delete=False, suffix=".json") as temp_file:
-#     temp_file.write(credentials_json.encode('utf-8'))
-#     temp_credentials_path = temp_file.name
-
-# # Set the path to the temporary credentials file in the environment
-# os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = temp_credentials_path
-
 # Set the path to your service account key JSON
-os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = 'apt-deployment-448704-h2-aa10099924e3.json'
+os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = ''
 
 def process_document(project_id: str, location: str, processor_id: str, file_path: str):
     client = documentai.DocumentProcessorServiceClient()
@@ -45,11 +33,16 @@ def process_document(project_id: str, location: str, processor_id: str, file_pat
         image_content = image.read()
     document = {"content": image_content, "mime_type": "application/pdf"}
     request = types.ProcessRequest(name=name, raw_document=document)
-    result = client.process_document(request=request)
+    # result = client.process_document(request=request)
+    try:
+        result = client.process_document(request=request)
+    except Exception as e:
+        print(f"Error: {e}")
     document = result.document
+    print(document.text)
     return document.text
 def chat_with_groq(query,processedtext=""):
-    client = Groq(api_key="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")
+    client = Groq(api_key="")
     chat_completion = client.chat.completions.create(
         messages=[
             {
@@ -65,7 +58,7 @@ def chat_with_groq(query,processedtext=""):
                 "content": query,
             }
         ],
-        model="llama3.3-70b-versatile",
+        model="llama-3.3-70b-versatile",
     )
     return chat_completion.choices[0].message.content
 
@@ -190,12 +183,12 @@ def chatbot():
                 file_path = "temp.pdf"
                 pdf.save(file_path)
                 
-                project_id = "apt-deployment-448704-h2"
+                project_id = ""
                 location = "us"
-                processor_id = "b634c0d70f0a458e"
+                processor_id = ""
                 document_text = chat_with_groq(query=query,processedtext=process_document(project_id, location, processor_id, file_path))
                 os.remove(file_path)
-                
+                print(document_text)
                 return jsonify({"response": document_text})
             
             elif 'text' in request.form:
@@ -279,7 +272,7 @@ def brain_tumor():
         file_path = tempfile.mktemp(suffix='.jpg')
         file.save(file_path)
         
-        client = InferenceHTTPClient(api_url="https://detect.roboflow.com", api_key="YHypHFb5eybSSeruMCo4")
+        client = InferenceHTTPClient(api_url="https://detect.roboflow.com", api_key="")
         result = client.infer(file_path, model_id="brain-tumor-vgetf/1")
         os.remove(file_path)
         
@@ -308,7 +301,7 @@ def skin_cancer():
         file_path = tempfile.mktemp(suffix='.jpg')
         file.save(file_path)
         
-        client = InferenceHTTPClient(api_url="https://classify.roboflow.com", api_key="1yoJXD1rfYZYFTaqKyvh")
+        client = InferenceHTTPClient(api_url="https://classify.roboflow.com", api_key="")
         result = client.infer(file_path, model_id="molemonitor/4")
         os.remove(file_path)
         
@@ -344,7 +337,7 @@ def pneumonia_detection():
             file.save(temp_file_path)
         
         # Initialize the InferenceHTTPClient
-        client = InferenceHTTPClient(api_url="https://detect.roboflow.com", api_key="MqdegO9gukH95ZvKkZAQ")
+        client = InferenceHTTPClient(api_url="https://detect.roboflow.com", api_key="")
         
         # Perform the inference
         result = client.infer(temp_file_path, model_id="pneumonia-cls/1")
