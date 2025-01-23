@@ -16,23 +16,27 @@ import tempfile
 import json
 from dotenv import load_dotenv
 from inference_sdk import InferenceHTTPClient
+import requests
 
 app = Flask(__name__)
 load_dotenv()
 CORS(app)
 
 
-# Decode the Base64-encoded JSON and write it to a temporary file
-base64_credentials = os.getenv('GOOGLE_APPLICATION_CREDENTIALS_BASE64')
-credentials_json = base64.b64decode(base64_credentials).decode('utf-8')
+# # Decode the Base64-encoded JSON and write it to a temporary file
+# base64_credentials = os.getenv('GOOGLE_APPLICATION_CREDENTIALS_BASE64')
+# credentials_json = base64.b64decode(base64_credentials).decode('utf-8')
 
-# Create a temporary file and write the decoded JSON to it
-with tempfile.NamedTemporaryFile(delete=False, suffix=".json") as temp_file:
-    temp_file.write(credentials_json.encode('utf-8'))
-    temp_credentials_path = temp_file.name
+# # Create a temporary file and write the decoded JSON to it
+# with tempfile.NamedTemporaryFile(delete=False, suffix=".json") as temp_file:
+#     temp_file.write(credentials_json.encode('utf-8'))
+#     temp_credentials_path = temp_file.name
 
-# Set the path to the temporary credentials file in the environment
-os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = temp_credentials_path
+# # Set the path to the temporary credentials file in the environment
+# os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = temp_credentials_path
+
+# Set the path to your service account key JSON
+os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = 'apt-deployment-448704-h2-aa10099924e3.json'
 
 def process_document(project_id: str, location: str, processor_id: str, file_path: str):
     client = documentai.DocumentProcessorServiceClient()
@@ -45,7 +49,7 @@ def process_document(project_id: str, location: str, processor_id: str, file_pat
     document = result.document
     return document.text
 def chat_with_groq(query,processedtext=""):
-    client = Groq(api_key="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")
+    client = Groq(api_key="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")
     chat_completion = client.chat.completions.create(
         messages=[
             {
@@ -61,10 +65,13 @@ def chat_with_groq(query,processedtext=""):
                 "content": query,
             }
         ],
-        model="llama3-70b-8192",
+        model="llama3.3-70b-versatile",
     )
     return chat_completion.choices[0].message.content
 
+@app.route('/', methods=['GET'])
+def home():
+    return "Welcome to the Medical Detection API!"
 
 @app.route('/process_image', methods=['POST'])
 def index():
@@ -183,9 +190,9 @@ def chatbot():
                 file_path = "temp.pdf"
                 pdf.save(file_path)
                 
-                project_id = "local-bebop-435210-v6"
+                project_id = "apt-deployment-448704-h2"
                 location = "us"
-                processor_id = "551bd258e97e5cf9"
+                processor_id = "b634c0d70f0a458e"
                 document_text = chat_with_groq(query=query,processedtext=process_document(project_id, location, processor_id, file_path))
                 os.remove(file_path)
                 
@@ -362,3 +369,14 @@ def pneumonia_detection():
         return jsonify({'error': f"Other error occurred: {err}"}), 500
 if __name__ == "__main__":
     app.run(debug=True)
+
+# from flask import Flask
+
+# app = Flask(__name__)
+
+# @app.route('/', methods=['GET'])
+# def home():
+#     return "Welcome to the Medical Detection API!"
+
+# if __name__ == "__main__":
+#     app.run(debug=True)
