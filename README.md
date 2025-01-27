@@ -1,4 +1,4 @@
-# **MedAI Platform - AI-Powered Healthcare Diagnostics**
+# **HealthAware - AI-Powered Healthcare Diagnostics**
 
 ## **Overview**  
 **HealthAware** is an AI-powered healthcare platform designed to streamline medical diagnostics through cutting-edge technologies like image classification, OCR-based report parsing, and AI chatbots. Our solution aims to empower both individuals and healthcare institutions by providing fast, accurate, and accessible tools for disease detection and medical decision-making.
@@ -62,7 +62,7 @@ Ensure you have the following tools installed:
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/harshj3915/MedAI-Healthcare-Diagnostics.git
+   git clone https://github.com/ojasKooL/healthaware.git
    cd /FLASK
    ```
 
@@ -167,7 +167,9 @@ Ensure you have the following tools installed:
 ## **Contact**  
 
 For inquiries or collaboration:  
-📧 **Email**: *raghavkejriwal199@gmail.com*  
-📧 **Email**: *kulkarniojas027@gmail.com*  
+📧 **Email**: *raghavkejriwal199@gmail.com*
+📧 **Email**: *hjain3915@gmail.com*
+📧 **Email**: *kulkarniojas027@gmail.com*
+
 
 ---
