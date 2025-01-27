@@ -1,7 +1,7 @@
 # **MedAI Platform - AI-Powered Healthcare Diagnostics**
 
 ## **Overview**  
-**MedAI** is an AI-powered healthcare platform designed to streamline medical diagnostics through cutting-edge technologies like image classification, OCR-based report parsing, and AI chatbots. Our solution aims to empower both individuals and healthcare institutions by providing fast, accurate, and accessible tools for disease detection and medical decision-making.
+**HealthAware** is an AI-powered healthcare platform designed to streamline medical diagnostics through cutting-edge technologies like image classification, OCR-based report parsing, and AI chatbots. Our solution aims to empower both individuals and healthcare institutions by providing fast, accurate, and accessible tools for disease detection and medical decision-making.
 
 ---
 
@@ -167,7 +167,7 @@ Ensure you have the following tools installed:
 ## **Contact**  
 
 For inquiries or collaboration:  
-📧 **Email**: *hjain3915@gmail.com*    
-🌐 **Website**: *[Portfolio](https://harshkothari.vercel.app/)*  
+📧 **Email**: *raghavkejriwal199@gmail.com*  
+📧 **Email**: *kulkarniojas027@gmail.com*  
 
 ---
