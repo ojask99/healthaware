@@ -1,4 +1,4 @@
-# **HealthAware - AI-Powered Healthcare Diagnostics**
+# **HealthAware: AI-Powered Healthcare Diagnostics**
 
 ## **Overview**  
 **HealthAware** is an AI-powered healthcare platform designed to streamline medical diagnostics through cutting-edge technologies like image classification, OCR-based report parsing, and AI chatbots. Our solution aims to empower both individuals and healthcare institutions by providing fast, accurate, and accessible tools for disease detection and medical decision-making.
