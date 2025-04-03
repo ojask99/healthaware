@@ -8,7 +8,8 @@
 ## **Features**  
 
 ### 🔍 **Automated Health Diagnostics**  
-- **Image Classification**: Real-time detection of medical artifacts like bacilli in sputum images using AI-based image analysis.  
+- **Medical Object Detection**: Real-time detection of medical artifacts like bacilli in sputum images using AI-based image analysis.
+- **Image Classification**: Real-time multimodal medical image classification powered by transfer learning to classify the image as a particular disease/defect/concern. 
 - **Report Parsing**: Extract and analyze information from blood, urology, and other medical reports using OCR technology for automated disease diagnosis.
 
 ### 🤖 **AI-Powered Health Chatbot**  
@@ -143,7 +144,7 @@ Ensure you have the following tools installed:
 - Integration with existing healthcare systems.  
 
 ### ✅ **Solutions**  
-- Implemented **Explainable AI (XAI)** to enhance trust.  
+- Implemented **Explainable AI (XAI)** powered by **Layerwise Relevance Propagation (LRP)** to enhance trust.  
 - Prioritized **data security** and no medical data storage.  
 - Partnered with healthcare institutions for real-world feedback.
 
@@ -167,7 +168,7 @@ Ensure you have the following tools installed:
 ## **Contact**  
 
 For inquiries or collaboration:  
-📧 **Email**: *kulkarniojas027@gmail.com*, *raghavkejriwal199@gmail.com*, *hjain3915@gmail.com*
+📧 **Email**: *shivanshgupta0901@gmail.com* *kulkarniojas027@gmail.com*, *raghavkejriwal199@gmail.com*, *hjain3915@gmail.com*
 
 
 
