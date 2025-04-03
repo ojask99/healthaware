@@ -168,7 +168,7 @@ Ensure you have the following tools installed:
 ## **Contact**  
 
 For inquiries or collaboration:  
-📧 **Email**: *shivanshgupta0901@gmail.com* *kulkarniojas027@gmail.com*, *raghavkejriwal199@gmail.com*, *hjain3915@gmail.com*
+📧 **Email**: *shivanshgupta0901@gmail.com*, *kulkarniojas027@gmail.com*, *raghavkejriwal199@gmail.com*, *hjain3915@gmail.com*
 
 
 
