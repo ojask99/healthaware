@@ -1,42 +1,42 @@
 # **Healthaware: AI-Powered Healthcare Diagnostics**
 
-## **Overview**  
-**Healthaware** is an AI-powered healthcare platform designed to streamline medical diagnostics through cutting-edge technologies like image classification, OCR-based report parsing, and AI chatbots. Our solution aims to empower both individuals and healthcare institutions by providing fast, accurate, and accessible tools for disease detection and medical decision-making.
+## **Overview**
 
----
+**Healthaware** is an AI-powered healthcare platform designed to streamline medical diagnostics through technologies like image classification, OCR-based report parsing, and AI chatbots. It aims to empower individuals and healthcare institutions by providing fast, accurate, and accessible tools for disease detection and basic medical guidance.
 
-## **Features**  
+## **Features**
 
-### 🔍 **Automated Health Diagnostics**  
-- **Medical Object Detection**: Real-time detection of medical artifacts like bacilli in sputum images using AI-based image analysis.
-- **Image Classification**: Real-time multimodal medical image classification powered by transfer learning to classify the image as a particular disease/defect/concern. 
-- **Report Parsing**: Extract and analyze information from blood, urology, and other medical reports using OCR technology for automated disease diagnosis.
+### 🧠 **Automated Health Diagnostics**
 
-### 🤖 **AI-Powered Health Chatbot**  
-- Provides answers to general health queries.  
-- Simplifies complex medical terms and supports informed decision-making.
+* **Medical Object Detection**: Detects medical artifacts like bacilli in sputum images using AI-based image analysis.
+* **Image Classification**: Classifies medical images (X-rays, microscopy, etc.) using transfer learning to identify potential diseases.
+* **Report Parsing**: Extracts and analyzes information from blood, urology, and other medical reports using OCR technology.
 
-### ⚙️ **Seamless Integration**  
-- Designed for easy adoption in medical labs, clinics, and healthcare institutions.  
-- Built with scalability in mind using **Flask** for the backend and **Next.js** for the frontend.
+### 💬 **AI-Powered Health Chatbot**
 
----
+* Answers general health queries
+* Explains complex medical terms in simpler language
+* Helps with basic health decision-making
 
-## **Technologies Used**  
+### 🛠️ **Seamless Integration**
 
-| **Tech Stack**       | **Details**                            |
-|-----------------------|----------------------------------------|
-| **Frontend**         | Next.js, React.js, Tailwind CSS        |
-| **Backend**          | Flask (Python)                        |
-| **AI/ML**            | PyTorch, OpenCV|
-| **OCR**              | Tesseract OCR                         |
-| **Cloud Infrastructure** |  Google Cloud                   |
-| **Database**         | MongoDB                               |
-| **APIs**             | RESTful APIs                          |
+* Easy to adopt in clinics, labs, or hospitals
+* Built with **Flask** (backend) and **Next.js** (frontend)
+* Designed to be scalable
 
----
+## **Technologies Used**
 
-## **Architecture**  
+| **Tech Stack** | **Details**                     |
+| -------------- | ------------------------------- |
+| **Frontend**   | Next.js, React.js, Tailwind CSS |
+| **Backend**    | Flask (Python)                  |
+| **AI/ML**      | PyTorch, OpenCV                 |
+| **OCR**        | Tesseract OCR                   |
+| **Cloud**      | Google Cloud                    |
+| **Database**   | MongoDB                         |
+| **APIs**       | RESTful APIs                    |
+
+## **Architecture**
 
 ```plaintext
 [User Interface - Next.js]
@@ -50,123 +50,98 @@
 [ML Models: Image Classification, OCR Parsing]
 ```
 
----
+## **Setup Instructions**
 
-## **Setup Instructions**  
+### 🔧 **Prerequisites**
 
-### 🚀 **Prerequisites**  
-Ensure you have the following tools installed:  
-- **Node.js** (v14+): [Download Node.js](https://nodejs.org)  
-- **Python** (v3.8+): [Download Python](https://python.org)  
+* **Node.js** (v14+): [Download Node.js](https://nodejs.org)
+* **Python** (v3.8+): [Download Python](https://python.org)
 
-### 💻 **Backend Setup**  
+### 💻 **Backend Setup**
 
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/ojasKooL/healthaware.git
-   cd /FLASK
-   ```
+```bash
+git clone https://github.com/ojasKooL/healthaware.git
+cd FLASK
+python -m venv env
+source env/bin/activate  # On Windows use `env\Scripts\activate`
+pip install -r requirements.txt
+python app.py
+```
 
-2. Create a virtual environment and install dependencies:
-   ```bash
-   python -m venv env
-   source env/bin/activate  # On Windows use `env\Scripts\activate`
-   pip install -r requirements.txt
-   ```
+Runs at `http://localhost:5000`
 
-3. Start the Flask backend:
-   ```bash
-   python app.py
-   ```
+### 🌐 **Frontend Setup**
 
-   Backend will run at `http://localhost:5000`.
+```bash
+cd ../NEXTJS/client
+npm install
+npm run dev
+```
 
----
+Runs at `http://localhost:3000`
 
-### 🌐 **Frontend Setup**  
+## **Key Functionalities**
 
-1. Navigate to the frontend directory:
-   ```bash
-   cd ../NEXTJS/client
-   ```
+### 🩺 **Image Classification**
 
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
+* Upload medical images (e.g., X-rays, sputum images)
+* Detect and classify medical anomalies like pneumonia or tuberculosis
 
-3. Start the Next.js development server:
-   ```bash
-   npm run dev
-   ```
+### 📄 **OCR-Based Report Parsing**
 
-   Frontend will run at `http://localhost:3000`.
+* Upload medical reports (PDFs or images)
+* Extracts relevant values and data using OCR
 
----
+### 🤖 **AI Chatbot**
 
-## **Key Functionalities**  
+* Get health-related answers using natural language
+* Interact in plain, simple language
 
-### 🩺 **Image Classification**  
-- Upload medical images (e.g., X-rays, sputum images).  
-- AI models detect and classify medical anomalies like pneumonia or tuberculosis.
+## **How to Use**
 
-### 📄 **OCR-Based Report Parsing**  
-- Upload medical reports (PDFs/images).  
-- OCR extracts relevant information for disease diagnosis.  
+1. **Upload Medical Image**
 
-### 🤝 **AI Chatbot**  
-- Get health-related answers using natural language processing (NLP).  
+   * Go to the dashboard
+   * Upload an image (X-ray, microscopy)
+   * View real-time diagnosis
 
----
+2. **Parse Medical Reports**
 
-## **How to Use**  
+   * Upload a scanned report
+   * Get structured data and diagnosis hints
 
-1. **Upload Medical Image**:  
-   - Visit the dashboard.  
-   - Upload X-ray or microscopy images.  
-   - View results in real time.  
+3. **Use the Health Chatbot**
 
-2. **Parse Medical Reports**:  
-   - Upload a scanned report.  
-   - Extract structured data for disease diagnosis.  
+   * Enter health queries
+   * Receive basic AI-generated responses
 
-3. **Use the Health Chatbot**:  
-   - Enter general health queries for immediate AI-driven answers.  
+## **Challenges & Solutions**
 
----
+### ⚠️ Challenges
 
+* Ensuring privacy of medical data
+* Maintaining accuracy of AI models
+* Integrating into existing healthcare systems
 
-## **Challenges & Solutions**  
+### ✅ Solutions
 
-### 🚧 **Challenges**  
-- Data privacy concerns for medical reports.  
-- Ensuring AI diagnostic accuracy.  
-- Integration with existing healthcare systems.  
+* No storage of sensitive data
+* Used **Explainable AI (XAI)** like LRP for transparency
+* Collected feedback from real users to improve reliability
 
-### ✅ **Solutions**  
-- Implemented **Explainable AI (XAI)** powered by **Layerwise Relevance Propagation (LRP)** to enhance trust.  
-- Prioritized **data security** and no medical data storage.  
-- Partnered with healthcare institutions for real-world feedback.
+## **Potential Impact**
 
----
+* **For Individuals**: Easier access to diagnostics, better understanding of reports
+* **For Clinics/Labs**: Saves time, reduces manual work like bacilli counting
+* Supports **Digital India** healthcare digitization efforts
 
-## **Potential Impact**  
+## **Future Enhancements**
 
-- **For Individuals**: Accurate diagnostics, report interpretation, and improved health awareness.  
-- **For Healthcare Institutions**: Automates tedious tasks like bacilli counting, reducing errors and saving time.  
-- Promotes **digitization** of medical records in line with **Digital India** initiatives.
+* Support for CT/MRI scans
+* Integration with **Electronic Health Records (EHR)**
+* Multilingual chatbot
 
----
+## **Contributors**
 
-## **Future Enhancements**  
-
-- Support for additional medical imaging tasks (CT scans, MRIs).  
-- Integration with **Electronic Health Records (EHR)**.  
-- Advanced chatbot with **multilingual support**.  
-
----
-## **Contributors**  
-- ML: [Shivansh Gupta](https://github.com/shivansh0901), [Raghav Kejriwal](https://github.com/Raghav-Kejriwal), [Nandita Mishra](https://github.com/nandita3008)
-- Web: [Ojas Kulkarni](https://github.com/ojask99), [Harsh Kothari](https://github.com/harshj3915)
-
----
+* ML: [Shivansh Gupta](https://github.com/shivansh0901), [Raghav Kejriwal](https://github.com/Raghav-Kejriwal), [Nandita Mishra](https://github.com/nandita3008)
+* Web: [Ojas Kulkarni](https://github.com/ojask99), [Harsh Kothari](https://github.com/harshj3915)
