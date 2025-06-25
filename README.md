@@ -1,7 +1,7 @@
-# **HealthAware: AI-Powered Healthcare Diagnostics**
+# **Healthaware: AI-Powered Healthcare Diagnostics**
 
 ## **Overview**  
-**HealthAware** is an AI-powered healthcare platform designed to streamline medical diagnostics through cutting-edge technologies like image classification, OCR-based report parsing, and AI chatbots. Our solution aims to empower both individuals and healthcare institutions by providing fast, accurate, and accessible tools for disease detection and medical decision-making.
+**Healthaware** is an AI-powered healthcare platform designed to streamline medical diagnostics through cutting-edge technologies like image classification, OCR-based report parsing, and AI chatbots. Our solution aims to empower both individuals and healthcare institutions by providing fast, accurate, and accessible tools for disease detection and medical decision-making.
 
 ---
 
@@ -165,11 +165,8 @@ Ensure you have the following tools installed:
 - Advanced chatbot with **multilingual support**.  
 
 ---
-## **Contact**  
-
-For inquiries or collaboration:  
-📧 **Email**: *shivanshgupta0901@gmail.com*, *kulkarniojas027@gmail.com*, *raghavkejriwal199@gmail.com*, *hjain3915@gmail.com*
-
-
+## **Contributors**  
+- ML: [Shivansh Gupta](https://github.com/shivansh0901), [Raghav Kejriwal](https://github.com/Raghav-Kejriwal), [Nandita Mishra](https://github.com/nandita3008)
+- Web: [Ojas Kulkarni](https://github.com/ojask99), [Harsh Kothari](https://github.com/harshj3915)
 
 ---
